@@ -1,0 +1,23 @@
+Book=read.csv(file.choose())
+View(Book)
+str(Book)
+summary(Book)
+library(arules)
+library(arulesViz)
+book=as.matrix(Book)
+rules=apriori(book,parameter = list(support=0.02,confidence=0.8,minlen=5))
+rules
+inspect(head(rules))
+inspect(head(sort(rules,by="confidence")))            
+plot(rules)
+plot(rules,measure = "confidence")
+plot(rules,method = "grouped")
+plot(rules,method = "graph")
+rules1=apriori(book,parameter = list(support=0.02,confidence=0.75,minlen=5))
+rules1
+inspect(head(rules1))
+inspect(head(sort(rules1,by="confidence")))
+plot(rules1)
+plot(rules1,method = "grouped")
+#Italcook is sold with Italart,cookbks,DoItBks,ArtBks
+plot(rules1,method = "graph")
