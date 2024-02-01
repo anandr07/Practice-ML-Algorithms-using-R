@@ -1,0 +1,30 @@
+credit_Card=read.csv(file.choose())
+summary(credit_Card)
+str(credit_Card)
+Data=credit_Card[,-1]
+library(dummies)
+Data$owner=dummy(Data$owner)
+Data$selfemp=dummy(Data$selfemp)
+Data$card=as.factor(Data$card)
+Data$card=as.numeric(Data$card)
+attach(Data)
+summary(Data)
+str(Data)
+model_1=glm(card~.,data = Data)
+summary(model_1)
+229.57-147.38
+New_data=Data[,-c(3,6,8,10)]
+`owner)yes`=as.factor(`owner)yes`)
+model_2=glm(New_data$card~.,data = New_data)
+summary(model_2)
+229.57-147.70
+pred=predict(model_2,type="response",New_data)
+pred
+conf_mat=table(pred>0.5,New_data$card)
+conf_mat
+accuracy=sum(diag(conf_mat))/sum(conf_mat)
+accuracy
+#78.16
+library(pROC)
+roc(card,model_2$fitted.values,plot=TRUE,legacy.axes=TRUE)
+#AUC=0.9319
